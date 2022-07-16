@@ -2,9 +2,14 @@
 - name: Apply common configuration to all nodes
   hosts: all
   roles:
-    - { role: common, ol_update: true }
+    - { role: common-setup, ol_update: false }
 
 - name: Setup ocne-operator node
   hosts: ocne-operator
   roles:
     - { role: operator-setup }
+
+- name: Setup ocne-control node
+  hosts: ocne-control
+  roles:
+    - { role: control-setup }
