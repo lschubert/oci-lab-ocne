@@ -1,0 +1,29 @@
+---
+# Update Oracle Linux on all hosts
+- name: Update Oracle Linux
+  dnf:
+    name: '*'
+    state: latest
+  become: true
+  when: ol_update == true
+
+# Reboot all hosts
+- name: Reboot 
+  reboot:
+  become: true
+  when: ol_update == true
+
+# Install ocne yum repo
+- name: Install ocne yum repo
+  dnf:
+    name: oracle-olcne-release-el8
+    state: latest
+  become: true
+  
+# Disable Swap
+- name: Disable Swap
+  shell: |
+    swapoff -a
+    sed -i '/swap/ s/^#*/#/' /etc/fstab
+  become: true
+

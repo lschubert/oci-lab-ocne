@@ -1,0 +1,10 @@
+---
+- name: Apply common configuration to all nodes
+  hosts: all
+  roles:
+    - { role: common, ol_update: true }
+
+- name: Setup ocne-operator node
+  hosts: ocne-operator
+  roles:
+    - { role: operator-setup }
