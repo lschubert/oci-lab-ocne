@@ -16,3 +16,18 @@
   hosts: ocne-control
   roles:
     - { role: control-setup }
+
+- name: Setup ocne-worker node
+  hosts: ocne-worker
+  roles:
+    - { role: worker-setup }
+
+- name: Bootstrap Platform API Server
+  hosts: ocne-operator
+  roles:
+    - { role: bootstrap-api }
+
+- name: Bootstrap Platform Agents
+  hosts: ocne-operator, ocne-worker
+  roles:
+    - { role: bootstrap-agent }

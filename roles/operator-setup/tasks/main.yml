@@ -24,7 +24,7 @@
   become: true
 
 # Create X.509 Certificates
-- name: Create X.509 Certificates
+- name: Create X.509 Certificates for internal IPs
   shell: |
     cd /etc/olcne
     ./gen-certs-helper.sh \
@@ -56,3 +56,31 @@
   shell: |
     bash -ex /etc/olcne/configs/certificates/olcne-tranfer-certs.sh
 
+# Create X.509 Certificates
+- name: Create X.509 Certificates for external IPs
+  shell: |
+    cd /etc/olcne
+    ./gen-certs-helper.sh \
+    --cert-dir /etc/olcne/configs/certificates/restrict_external_ip/ \
+    --cert-request-organization-unit "My Company Unit" \
+    --cert-request-organization "My Company" \
+    --cert-request-locality "My Town" \
+    --cert-request-state "My State" \
+    --cert-request-country US \
+    --cert-request-common-name cloud.example.com \
+    --nodes externalip-validation-webhook-service.externalip-validation-system.svc,\
+    externalip-validation-webhook-service.externalip-validation-system.svc.cluster.local \
+    --one-cert \
+    --byo-ca-cert /etc/olcne/configs/certificates/production/ca.cert \
+    --byo-ca-key /etc/olcne/configs/certificates/production/ca.key
+  become: true
+
+- name: Set permission on generated certificate
+  file:
+    path: "/etc/olcne/configs/certificates/restrict_external_ip/"
+    state: directory
+    owner: oracle
+    group: oracle
+    recurse: yes
+  become: true
+    

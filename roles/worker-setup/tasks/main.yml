@@ -1,0 +1,15 @@
+---
+# Install Platfrom Agent
+- name: Install Platform Agent
+  dnf:
+    name: "olcne-agent,olcne-utils"
+    enablerepo: "ol8_olcne15,ol8_addons,ol8_baseos_latest,ol8_appstream,ol8_UEKR6"
+    disablerepo: "ol8_olcne12,ol8_olcne13,ol8_olcne14,ol8_developer"
+  become: true
+
+# Enable olcne-agent
+- name: Enable olcne-agent
+  systemd: 
+    name: olcne-agent
+    enabled: yes
+  become: true
