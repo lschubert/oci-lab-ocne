@@ -38,4 +38,10 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
     4.3. execute ```export ANSIBLE_HOST_KEY_CHECKING=False```
 
-    2.2. in oci-lab-ocne folder execute ```ansible-playbook -i ./hosts --private-key ~/.ssh/ocne_lab_id_rsa setup.yml```
+    4.4. in oci-lab-ocne folder execute ```ansible-playbook -i ./hosts --private-key ~/.ssh/ocne_lab_id_rsa setup.yml```
+
+
+# Develop ToDo's
+
+1. Install private/public ssh key on ocne-operator node
+2. configure public ssh key in authorizes_keys of ocne-control and ocne-worker
