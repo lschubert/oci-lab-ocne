@@ -1,5 +1,4 @@
 ---
-
 # Configure Firewall
 - name: Configure Firewall
   firewalld:
@@ -7,11 +6,12 @@
     permanent: yes
     immediate: yes
     state: enabled
+  become: true 
 
 # Install OCNE with proper repos 
 - name: Install Platform CLI, Platform API Server and utilities
   dnf:
-    name: olcnectl olcne-api-server olcne-utils
+    name: "olcnectl,olcne-api-server,olcne-utils"
     enablerepo: "ol8_olcne15,ol8_addons,ol8_baseos_latest,ol8_appstream,ol8_UEKR6"
     disablerepo: "ol8_olcne12,ol8_olcne13,ol8_olcne14,ol8_developer"
   become: true
@@ -21,3 +21,66 @@
   systemd: 
     name: olcne-api-server
     enabled: yes
+  become: true
+
+# Create X.509 Certificates
+- name: Create X.509 Certificates for internal IPs
+  shell: |
+    cd /etc/olcne
+    ./gen-certs-helper.sh \
+    --cert-request-organization-unit "My Company Unit" \
+    --cert-request-organization "My Company" \
+    --cert-request-locality "My Town" \
+    --cert-request-state "My State" \
+    --cert-request-country US \
+    --cert-request-common-name pub.linuxvirt.oraclecvn.com \
+    --nodes ocne-worker.pub.linuxvirt.oraclevcn.com,ocne-control.pub.linuxvirt.oraclevcn.com,ocne-operator.pub.linuxvirt.oraclevcn.com
+  become: true
+
+- name: Update user in transfer script
+  shell: |
+    sed -i 's/USER=opc/USER=oracle/g' /etc/olcne/configs/certificates/olcne-tranfer-certs.sh
+  become: true
+
+- name: Set permission on certificates
+  file:
+    path: "/etc/olcne/configs/certificates/tmp-olcne/{{ item }}"
+    mode: 0644
+  become: true
+  loop: 
+    - "ocne-control.pub.linuxvirt.oraclevcn.com/node.key"
+    - "ocne-operator.pub.linuxvirt.oraclevcn.com/node.key"
+    - "ocne-worker.pub.linuxvirt.oraclevcn.com/node.key"
+
+- name: Transfer certificates
+  shell: |
+    bash -ex /etc/olcne/configs/certificates/olcne-tranfer-certs.sh
+
+# Create X.509 Certificates
+- name: Create X.509 Certificates for external IPs
+  shell: |
+    cd /etc/olcne
+    ./gen-certs-helper.sh \
+    --cert-dir /etc/olcne/configs/certificates/restrict_external_ip/ \
+    --cert-request-organization-unit "My Company Unit" \
+    --cert-request-organization "My Company" \
+    --cert-request-locality "My Town" \
+    --cert-request-state "My State" \
+    --cert-request-country US \
+    --cert-request-common-name cloud.example.com \
+    --nodes externalip-validation-webhook-service.externalip-validation-system.svc,\
+    externalip-validation-webhook-service.externalip-validation-system.svc.cluster.local \
+    --one-cert \
+    --byo-ca-cert /etc/olcne/configs/certificates/production/ca.cert \
+    --byo-ca-key /etc/olcne/configs/certificates/production/ca.key
+  become: true
+
+- name: Set permission on generated certificate
+  file:
+    path: "/etc/olcne/configs/certificates/restrict_external_ip/"
+    state: directory
+    owner: oracle
+    group: oracle
+    recurse: yes
+  become: true
+    

@@ -1,0 +1,41 @@
+---
+# Configure Firewall
+- name: Configure Firewall 
+  firewalld:
+    port: "{{ item }}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: true
+  with_items:
+    - 8090
+    - 10250
+    - 10255
+    - 8472
+    - 6443
+    - 10251
+    - 10252
+    - 2379
+    - 2380
+
+# Load the Bridge Filtering Module
+- name: Load the Bridge Filtering Module
+  shell: |
+    modprobe br_netfilter
+    sh -c 'echo "br_netfilter" > /etc/modules-load.d/br_netfilter.conf'
+  become: true
+
+# Install Platfrom Agent
+- name: Install Platform Agent
+  dnf:
+    name: "olcne-agent,olcne-utils"
+    enablerepo: "ol8_olcne15,ol8_addons,ol8_baseos_latest,ol8_appstream,ol8_UEKR6"
+    disablerepo: "ol8_olcne12,ol8_olcne13,ol8_olcne14,ol8_developer"
+  become: true
+
+# Enable olcne-agent
+- name: Enable olcne-agent
+  systemd: 
+    name: olcne-agent
+    enabled: yes
+  become: true
