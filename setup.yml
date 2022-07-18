@@ -5,7 +5,7 @@
     # variables:
     # ol_update: true: run "dnf update"
     # oci_executor: true: execute ansible playbook from oci lab environment; false: execute from anywhere according to README.md instructions
-    - { role: common-setup, ol_update: false, oci_executor: false } 
+    - { role: common-setup, ol_update: false, oci_executor: false, install_user: "oracle" } 
 
 - name: Setup ocne-operator node
   hosts: ocne-operator

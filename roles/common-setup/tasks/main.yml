@@ -1,26 +1,31 @@
 ---
 - name: Make sure ~/.ssh exists
   file:
-    path: "~/.ssh"
+    path: "/home/{{ install_user }}/.ssh"
     state: directory
     mode: '0700'
+  become: true
 
 - name: Configure SSH (oci executor)
   copy:
     src: "~/.ssh/{{ item.src }}"
-    dest: "~/.ssh/{{ item.dest }}"
+    dest: "/home/{{ install_user }}/.ssh/{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  become: true
   loop:
-    - {src: "id_rsa", dest: "id_rsa" }
-    - {src: "id_rsa.pub", dest: "id_rsa.pub" }
+    - {src: "id_rsa", dest: "id_rsa", mode: "0600" }
+    - {src: "id_rsa.pub", dest: "id_rsa.pub", mode: "0644" }
   when: oci_executor == true
 
 - name: Configure SSH (external executor)
   copy:
     src: "~/.ssh/{{ item.src }}"
-    dest: "~/.ssh/{{ item.dest }}"
+    dest: "/home/{{ install_user }}/.ssh/{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  become: true
   loop:
-    - {src: "ocne_lab_id_rsa", dest: "id_rsa" }
-    - {src: "ocne_lab_id_rsa.pub", dest: "id_rsa.pub" }
+    - {src: "ocne_lab_id_rsa", dest: "id_rsa", mode: "0600" }
+    - {src: "ocne_lab_id_rsa.pub", dest: "id_rsa.pub", mode: "0644" }
   when: oci_executor == false
 
 # Update Oracle Linux on all hosts
@@ -54,5 +59,17 @@
 - name: Authorize ssh access
   authorized_key:
     key: "{{ lookup('file','~/.ssh/id_rsa.pub')}}"
+    user: opc
     state: present
-  
+
+- name: Create group olcne
+  group:
+    name: olcne
+    state: present
+  become: true
+
+- name: Create user olcne
+  user:
+    name: olcne
+    group: olcne
+  become: true
