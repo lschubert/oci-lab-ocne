@@ -1,0 +1,12 @@
+---
+- name: Backup ssh config
+  copy:
+    src: ~/.ssh/config
+    dest: "~/.ssh/config_{{ ansible_date_time.epoch}}"
+- name: generate host configuration
+  template:
+    src: "{{ item.template }}"
+    dest: "{{ item.target }}"
+  loop:
+    - { template: "templates/hosts.j2", target: "./hosts" }
+    - { template: "templates/sshconfig.j2", target: "~/.ssh/config"}

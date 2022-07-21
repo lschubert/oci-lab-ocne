@@ -1,4 +1,9 @@
 ---
+- name: Configure executor
+  hosts: localhost
+  roles:
+    - { role: generate-resources, install_user: "oracle" }
+
 # - name: Apply common configuration to all nodes
 #   hosts: all
 #   roles:
@@ -28,11 +33,11 @@
 #     - { role: bootstrap-api }
 
 # - name: Bootstrap Platform Agents
-#   hosts: ocne-operator, ocne-worker
+#   hosts: ocne-control, ocne-worker
 #   roles:
 #     - { role: bootstrap-agent }
 
-- name: Create Environment and Kubernetes Module
-  hosts: ocne-operator
-  roles:
-    - { role: environment-kubernetes, install_user: "oracle" }
+# - name: Create Environment and Kubernetes Module
+#   hosts: ocne-operator
+#   roles:
+#     - { role: environment-kubernetes, install_user: "oracle" }

@@ -64,3 +64,5 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
 
 # Develop ToDo's
+
+Bootstrap Platform Agents does not properly work
