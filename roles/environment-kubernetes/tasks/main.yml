@@ -21,7 +21,7 @@
 - name: Make sure validation is successfull
   fail:
     msg: Validation of Kubernetes module failed. {{ mod_kube }}
-  when: "Validation of module mycluster succeeded." not in mod_kube.stdout
+  when: "'Validation of module mycluster succeeded.' not in mod_kube.stdout"
 
 - name: Install Kubernetes module
   shell: |
