@@ -1,4 +1,8 @@
 ---
+- name: Make sure ~/.ssh directory exists
+  file:
+    path: ~/.ssh
+    state: directory
 - name: Backup ssh config
   copy:
     src: ~/.ssh/config
