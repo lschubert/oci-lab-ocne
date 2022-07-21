@@ -48,7 +48,9 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
     5.3. execute ```export ANSIBLE_HOST_KEY_CHECKING=False```
 
-    5.4. in oci-lab-ocne folder execute ```ansible-playbook -i ./hosts --private-key ~/.ssh/ocne_lab_id_rsa setup.yml```
+    5.4. Make sure "oci_executor" variable in setup.yml is set to false
+
+    5.5. in oci-lab-ocne folder execute ```ansible-playbook -i ./hosts --private-key ~/.ssh/ocne_lab_id_rsa setup.yml```
 
 6. In case of "Lab Env". 
 
@@ -56,7 +58,9 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
     6.2. In Terminal execute ```export ANSIBLE_HOST_KEY_CHECKING=False```
 
-    6.3. in oci-lab-ocne folder execute ```ansible-playbook -i ./hosts setup.yml```
+    6.3. Make sure "oci_executor" variable in setup.yml is set to true
+
+    6.4. In oci-lab-ocne folder execute ```ansible-playbook -i ./hosts setup.yml```
 
 
 # Develop ToDo's
