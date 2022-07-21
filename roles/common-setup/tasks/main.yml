@@ -12,7 +12,7 @@
 - name: Configure SSH - ansible_user (oci executor)
   copy:
     src: "~/.ssh/{{ item.src }}"
-    dest: "/home/{{ ansible_user }/.ssh/{{ item.dest }}"
+    dest: "/home/{{ ansible_user }}/.ssh/{{ item.dest }}"
     mode: "{{ item.mode }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
