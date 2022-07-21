@@ -7,13 +7,15 @@
   become: true
   loop:
     - opc
-    - {{ install_user }}
+    - "{{ install_user }}"
 
 - name: Configure SSH - opc (oci executor)
   copy:
     src: "~/.ssh/{{ item.src }}"
     dest: "/home/opc/.ssh/{{ item.dest }}"
     mode: "{{ item.mode }}"
+    owner: opc
+    group: opc
   become: true
   loop:
     - {src: "id_rsa", dest: "id_rsa", mode: "0600" }
@@ -25,6 +27,8 @@
     src: "~/.ssh/{{ item.src }}"
     dest: "/home/{{ install_user }}/.ssh/{{ item.dest }}"
     mode: "{{ item.mode }}"
+    owner: "{{ install_user }}"
+    group: "{{ install_user }}"
   become: true
   loop:
     - {src: "id_rsa", dest: "id_rsa", mode: "0600" }
