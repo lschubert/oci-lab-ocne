@@ -13,6 +13,7 @@
   template:
     src: "{{ item.template }}"
     dest: "{{ item.target }}"
+    mode: 0644
   delegate_to: localhost
   loop:
     - { template: "templates/hosts.j2", target: "./hosts" }
