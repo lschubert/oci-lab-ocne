@@ -3,21 +3,21 @@
     shell: |
       olcnectl environment create --config-file myenvironment.yaml
     chdir: "~"
-  become: "{{ install_user }}"
+    become: "{{ install_user }}"
 
 - name: Create Kubernetes module
     shell: |
       olcnectl module create --config-file myenvironment.yaml
     chdir: "~"
-  become: "{{ install_user }}"
+    become: "{{ install_user }}"
 
 - name: Validate Kubernetes module
     shell: |
       olcnectl module validate --config-file myenvironment.yaml
     chdir: "~"
-  register: mod_kube
-  become: "{{ install_user }}"
-
+    register: mod_kube
+    become: "{{ install_user }}"
+  
 - name: Make sure validation is successfull
     fail:
       msg: Validation of Kubernetes module failed. {{ mod_kube }}
@@ -27,14 +27,14 @@
     shell: |
       olcnectl module install --config-file myenvironment.yaml
     chdir: "~"
-  become: "{{ install_user }}"
+    become: "{{ install_user }}"
 
 - name: Validate Deployment of Kubernetes module
     shell: |
       olcnectl module instances --config-file myenvironment.yaml
     chdir: "~"
-  register: deploy_mod_kube
-  become: "{{ install_user }}"
+    register: deploy_mod_kube
+    become: "{{ install_user }}"
 
 - name: Output of Validation
     debug:
@@ -44,7 +44,7 @@
     file:
       path: ~/.kube
       state: directory
-  become: "{{ install_user }}"
+    become: "{{ install_user }}"
 
 - name: "Setup kubectl - add config"
     copy:
@@ -52,20 +52,20 @@
       dest: ~/.kube/config
       owner: "{{ install_user }}"
       group: "{{ install_user }}"
-  become: true
+    become: true
 
 - name: "Setup kubectl - export environment"
     lineinfile:
       path: ~/.bashrc
       line: 'export KUBECONFIG=$HOME/.kube/config'
-  become: "{{ install_user }}"
+    become: "{{ install_user }}"
 
 - name: Validate kubectl
     shell: |
       kubectl get nodes
     chdir: "~"
-  register: kubectl
-  become: "{{ install_user }}"
+    register: kubectl
+    become: "{{ install_user }}"
 
 - name: Output of Validation
     debug:
