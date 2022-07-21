@@ -3,6 +3,7 @@
   copy:
     src: ~/.ssh/config
     dest: "~/.ssh/config_{{ ansible_date_time.epoch}}"
+  ignore_errors: true
 - name: generate host configuration
   template:
     src: "{{ item.template }}"
