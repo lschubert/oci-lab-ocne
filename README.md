@@ -14,7 +14,7 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
     1.2. In Lab Environment click on "Luna Lab" ... wait until Resources are provisioned. Click "Resources" Tab to gather IP addresses for ocne-operator, ocne-control and ocne-worker
 
-2. Checkout git repo from https://github.com/lschubert/oci-lab-ocne.git
+2. Checkout this git repo 
 
     2.1 either within Lab Environment (Case: Lab Env), or
 

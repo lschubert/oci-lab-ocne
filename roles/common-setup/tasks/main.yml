@@ -6,16 +6,16 @@
     mode: '0700'
   become: true
   loop:
-    - opc
+    - "{{ ansible_user }}"
     - "{{ install_user }}"
 
-- name: Configure SSH - opc (oci executor)
+- name: Configure SSH - ansible_user (oci executor)
   copy:
     src: "~/.ssh/{{ item.src }}"
-    dest: "/home/opc/.ssh/{{ item.dest }}"
+    dest: "/home/{{ ansible_user }/.ssh/{{ item.dest }}"
     mode: "{{ item.mode }}"
-    owner: opc
-    group: opc
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
   become: true
   loop:
     - {src: "id_rsa", dest: "id_rsa", mode: "0600" }
@@ -77,7 +77,7 @@
 - name: Authorize ssh access
   authorized_key:
     key: "{{ lookup('file','~/.ssh/id_rsa.pub')}}"
-    user: opc
+    user: "{{ ansible_user }}"
     state: present
 
 - name: Create group olcne
