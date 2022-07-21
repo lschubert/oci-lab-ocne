@@ -1,38 +1,38 @@
 ---
-- name: Apply common configuration to all nodes
-  hosts: all
-  roles:
-    # variables:
-    # ol_update: true: run "dnf update"
-    # oci_executor: true: execute ansible playbook from oci lab environment; false: execute from anywhere according to README.md instructions
-    - { role: common-setup, ol_update: false, oci_executor: true, install_user: "oracle" } 
+# - name: Apply common configuration to all nodes
+#   hosts: all
+#   roles:
+#     # variables:
+#     # ol_update: true: run "dnf update"
+#     # oci_executor: true: execute ansible playbook from oci lab environment; false: execute from anywhere according to README.md instructions
+#     - { role: common-setup, ol_update: false, oci_executor: true, install_user: "oracle" } 
 
-- name: Setup ocne-operator node
-  hosts: ocne-operator
-  roles:
-    - { role: operator-setup }
+# - name: Setup ocne-operator node
+#   hosts: ocne-operator
+#   roles:
+#     - { role: operator-setup }
 
-- name: Setup ocne-control node
-  hosts: ocne-control
-  roles:
-    - { role: control-setup }
+# - name: Setup ocne-control node
+#   hosts: ocne-control
+#   roles:
+#     - { role: control-setup }
 
-- name: Setup ocne-worker node
-  hosts: ocne-worker
-  roles:
-    - { role: worker-setup }
+# - name: Setup ocne-worker node
+#   hosts: ocne-worker
+#   roles:
+#     - { role: worker-setup }
 
-- name: Bootstrap Platform API Server
-  hosts: ocne-operator
-  roles:
-    - { role: bootstrap-api }
+# - name: Bootstrap Platform API Server
+#   hosts: ocne-operator
+#   roles:
+#     - { role: bootstrap-api }
 
-- name: Bootstrap Platform Agents
-  hosts: ocne-operator, ocne-worker
-  roles:
-    - { role: bootstrap-agent }
+# - name: Bootstrap Platform Agents
+#   hosts: ocne-operator, ocne-worker
+#   roles:
+#     - { role: bootstrap-agent }
 
 - name: Create Environment and Kubernetes Module
   hosts: ocne-operator
   roles:
-    - { role: environment-kubernetes }
+    - { role: environment-kubernetes, install_user: "oracle" }
