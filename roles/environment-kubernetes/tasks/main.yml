@@ -2,19 +2,19 @@
 - name: Create environment
   shell: |
     olcnectl environment create --config-file myenvironment.yaml
-  chdir: ~
+  chdir: "~"
   become: "{{ install_user }}"
 
 - name: Create Kubernetes module
   shell: |
     olcnectl module create --config-file myenvironment.yaml
-  chdir: ~
+  chdir: "~"
   become: "{{ install_user }}"
 
 - name: Validate Kubernetes module
   shell: |
     olcnectl module validate --config-file myenvironment.yaml
-  chdir: ~
+  chdir: "~"
   register: mod_kube
   become: "{{ install_user }}"
 
@@ -26,13 +26,13 @@
 - name: Install Kubernetes module
   shell: |
     olcnectl module install --config-file myenvironment.yaml
-  chdir: ~
+  chdir: "~"
   become: "{{ install_user }}"
 
 - name: Validate Deployment of Kubernetes module
   shell: |
     olcnectl module instances --config-file myenvironment.yaml
-  chdir: ~
+  chdir: "~"
   register: deploy_mod_kube
   become: "{{ install_user }}"
 
@@ -63,7 +63,7 @@
 - name: Validate kubectl
   shell: |
     kubectl get nodes
-  chdir: ~
+  chdir: "~"
   register: kubectl
   become: "{{ install_user }}"
 
