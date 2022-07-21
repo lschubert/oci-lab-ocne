@@ -40,13 +40,13 @@
   debug:
     var: deploy_mod_kube
 
-- name: Setup kubectl - make sure $HOME/.kube exists
+- name: "Setup kubectl - make sure $HOME/.kube exists"
   file:
     path: ~/.kube
     state: directory
   become: "{{ install_user }}"
 
-- name: Setup kubectl - add config
+- name: "Setup kubectl - add config"
   copy:
     src: /etc/kubernetes/admin.conf
     dest: ~/.kube/config
@@ -54,7 +54,7 @@
     group: "{{ install_user }}"
   become: true
 
-- name: Setup kubectl - export environment
+- name: "Setup kubectl - export environment"
   lineinfile:
     path: ~/.bashrc
     line: 'export KUBECONFIG=$HOME/.kube/config'
