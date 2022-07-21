@@ -4,10 +4,12 @@
     src: ~/.ssh/config
     dest: "~/.ssh/config_{{ ansible_date_time.epoch}}"
   ignore_errors: true
+  delegate_to: localhost
 - name: generate host configuration
   template:
     src: "{{ item.template }}"
     dest: "{{ item.target }}"
+  delegate_to: localhost
   loop:
     - { template: "templates/hosts.j2", target: "./hosts" }
     - { template: "templates/sshconfig.j2", target: "~/.ssh/config"}
