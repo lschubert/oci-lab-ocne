@@ -1,5 +1,5 @@
 ---
-- name: Bootstrap Platfrom API Server
+- name: Bootstrap Platfrom API Agents
   shell: |
     /etc/olcne/bootstrap-olcne.sh \
     --secret-manager-type file \
