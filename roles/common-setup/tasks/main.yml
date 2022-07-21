@@ -1,12 +1,26 @@
 ---
 - name: Make sure ~/.ssh exists
   file:
-    path: "/home/{{ install_user }}/.ssh"
+    path: "/home/{{ item }}/.ssh"
     state: directory
     mode: '0700'
   become: true
+  loop:
+    - opc
+    - {{ install_user }}
 
-- name: Configure SSH (oci executor)
+- name: Configure SSH - opc (oci executor)
+  copy:
+    src: "~/.ssh/{{ item.src }}"
+    dest: "/home/opc/.ssh/{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  become: true
+  loop:
+    - {src: "id_rsa", dest: "id_rsa", mode: "0600" }
+    - {src: "id_rsa.pub", dest: "id_rsa.pub", mode: "0644" }
+  when: oci_executor == true
+
+- name: Configure SSH - install_user (oci executor)
   copy:
     src: "~/.ssh/{{ item.src }}"
     dest: "/home/{{ install_user }}/.ssh/{{ item.dest }}"
