@@ -26,7 +26,7 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
 3.  In local git repo ...
 
-    3.1. Modify ```hosts``` file to map IP adresses from step 1.2 to corresponding nodes.
+    3.1. Modify ```generate-resources/vars/main.yml``` file to map IP adresses from step 1.2 to corresponding nodes.
 
 4. In case of "Local executor": In Lab Environement ...
 
