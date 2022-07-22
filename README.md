@@ -74,4 +74,4 @@ From Visual Studio Code Terminal connect with
 
 # Develop ToDo's
 
-Bootstrap Platform Agents does not properly work
+Validate Kubernetes module fails
