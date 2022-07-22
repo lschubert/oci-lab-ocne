@@ -1,9 +1,0 @@
-
-[ocne-operator]
-130.61.17.145 ansible_user=opc
-
-[ocne-control]
-130.61.75.147 ansible_user=opc
-
-[ocne-worker]
-130.61.143.111 ansible_user=opc
