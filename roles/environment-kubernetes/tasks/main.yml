@@ -1,4 +1,21 @@
 ---
+- name: Create Certificates Directory
+  file:
+    path: ~/.olcne/certificates
+    state: directory
+  become_user: "{{ install_user }}"
+
+- name: Configure Certificates
+  file:
+    path: "~/.olcne/certificates/{{ item }}"
+    src: "/etc/olcne/configs/certificates/production/{{ item }}"
+    state: link
+  become_user: "{{ install_user }}"
+  loop:
+    - ca.crt
+    - node.crt
+    - node.key
+
 - name: Create environment
   shell: olcnectl environment create --config-file ./myenvironment.yaml
   args:
