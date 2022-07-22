@@ -1,7 +1,6 @@
 ---
 - name: Create environment
-  shell: |
-    olcnectl environment create --config-file ./myenvironment.yaml
+  shell: olcnectl environment create --config-file ./myenvironment.yaml
   args:
     chdir: "~"
   register: env_create
@@ -13,8 +12,7 @@
   when: debug_output == true
 
 - name: Create Kubernetes module
-  shell: |
-    olcnectl module create --config-file ./myenvironment.yaml
+  shell: olcnectl module create --config-file ./myenvironment.yaml
   args:
     chdir: "~"
   register: mod_kube_create
@@ -26,8 +24,7 @@
   when: debug_output == true
 
 - name: Validate Kubernetes module
-  shell: |
-    olcnectl module validate --config-file myenvironment.yaml
+  shell: olcnectl module validate --config-file myenvironment.yaml
   args:
     chdir: "~"
   register: mod_kube_validate
@@ -44,15 +41,13 @@
   when: "'Validation of module mycluster succeeded.' not in mod_kube_validate.stdout"
 
 - name: Install Kubernetes module
-  shell: |
-    olcnectl module install --config-file myenvironment.yaml
+  shell: olcnectl module install --config-file myenvironment.yaml
   args:
     chdir: "~"
   become_user: "{{ install_user }}"
 
 - name: Validate Deployment of Kubernetes module
-  shell: |
-    olcnectl module instances --config-file myenvironment.yaml
+  shell: olcnectl module instances --config-file myenvironment.yaml
   args:
     chdir: "~"
   register: deploy_mod_kube
@@ -83,8 +78,7 @@
   become_user: "{{ install_user }}"
 
 - name: Validate kubectl
-  shell: |
-    kubectl get nodes
+  shell: kubectl get nodes
   args:
     chdir: "~"
   register: kubectl
