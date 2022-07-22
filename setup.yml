@@ -43,6 +43,7 @@
 
 - name: Create Environment and Kubernetes Module
   hosts: ocne-operator
+  remote_user: "{{ install_user }}"
   vars_files: main.yml
   roles:
     - { role: environment-kubernetes }
