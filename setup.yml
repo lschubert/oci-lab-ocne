@@ -4,6 +4,7 @@ debug_output: true
 - name: Configure executor
   hosts: localhost
   roles:
+    - include_vars: vars.yml
     - { role: generate-resources, install_user: "oracle" }
 
 - name: Apply common configuration to all nodes
@@ -12,34 +13,41 @@ debug_output: true
     # variables:
     # ol_update: true: run "dnf update"
     # oci_executor: true: execute ansible playbook from oci lab environment; false: execute from anywhere according to README.md instructions
+    - include_vars: vars.yml
     - { role: common-setup, ol_update: false, oci_executor: true, install_user: "oracle" } 
 
 - name: Setup ocne-operator node
   hosts: ocne-operator
   roles:
+    - include_vars: vars.yml
     - { role: operator-setup }
 
 - name: Setup ocne-control node
   hosts: ocne-control
   roles:
+    - include_vars: vars.yml
     - { role: control-setup }
 
 - name: Setup ocne-worker node
   hosts: ocne-worker
   roles:
+    - include_vars: vars.yml
     - { role: worker-setup }
 
 - name: Bootstrap Platform API Server
   hosts: ocne-operator
   roles:
+    - include_vars: vars.yml
     - { role: bootstrap-api }
 
 - name: Bootstrap Platform Agents
   hosts: ocne-control, ocne-worker
   roles:
+    - include_vars: vars.yml
     - { role: bootstrap-agent }
 
 - name: Create Environment and Kubernetes Module
   hosts: ocne-operator
   roles:
+    - include_vars: vars.yml
     - { role: environment-kubernetes, install_user: oracle }
