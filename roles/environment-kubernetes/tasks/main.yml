@@ -11,20 +11,31 @@
     olcnectl module create --config-file myenvironment.yaml
   args:
     chdir: "~"
+  register: mod_kube_create
   become_user: "{{ install_user }}"
+
+- name: DEBUG output
+  debug:
+    var: mod_kube_create
+  when: debug_output == true
 
 - name: Validate Kubernetes module
   shell: |
     olcnectl module validate --config-file myenvironment.yaml
   args:
     chdir: "~"
-  register: mod_kube
+  register: mod_kube_validate
   become_user: "{{ install_user }}"
+
+- name: DEBUG output
+  debug:
+    var: mod_kube_validate
+  when: debug_output == true
   
 - name: Make sure validation is successfull
   fail:
     msg: Validation of Kubernetes module failed. {{ mod_kube }}
-  when: "'Validation of module mycluster succeeded.' not in mod_kube.stdout"
+  when: "'Validation of module mycluster succeeded.' not in mod_kube_validate.stdout"
 
 - name: Install Kubernetes module
   shell: |

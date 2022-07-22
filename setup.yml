@@ -1,4 +1,6 @@
 ---
+debug_output: true
+
 - name: Configure executor
   hosts: localhost
   roles:
@@ -40,4 +42,4 @@
 - name: Create Environment and Kubernetes Module
   hosts: ocne-operator
   roles:
-    - { role: environment-kubernetes, install_user: "oracle" }
+    - { role: environment-kubernetes, install_user: oracle }
