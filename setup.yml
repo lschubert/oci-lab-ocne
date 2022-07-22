@@ -1,53 +1,51 @@
 ---
-debug_output: true
-
 - name: Configure executor
   hosts: localhost
+  vars_files: main.yml
   roles:
-    - include_vars: vars.yml
-    - { role: generate-resources, install_user: "oracle" }
+    - { role: generate-resources }
 
 - name: Apply common configuration to all nodes
   hosts: all
+  vars_files: main.yml
   roles:
     # variables:
     # ol_update: true: run "dnf update"
     # oci_executor: true: execute ansible playbook from oci lab environment; false: execute from anywhere according to README.md instructions
-    - include_vars: vars.yml
-    - { role: common-setup, ol_update: false, oci_executor: true, install_user: "oracle" } 
+    - { role: common-setup, ol_update: false, oci_executor: true} 
 
 - name: Setup ocne-operator node
   hosts: ocne-operator
+  vars_files: main.yml
   roles:
-    - include_vars: vars.yml
     - { role: operator-setup }
 
 - name: Setup ocne-control node
   hosts: ocne-control
+  vars_files: main.yml
   roles:
-    - include_vars: vars.yml
     - { role: control-setup }
 
 - name: Setup ocne-worker node
-  hosts: ocne-worker
+  hosts: ocne-worker#
+  vars_files: main.yml
   roles:
-    - include_vars: vars.yml
     - { role: worker-setup }
 
 - name: Bootstrap Platform API Server
   hosts: ocne-operator
+  vars_files: main.yml
   roles:
-    - include_vars: vars.yml
     - { role: bootstrap-api }
 
 - name: Bootstrap Platform Agents
   hosts: ocne-control, ocne-worker
+  vars_files: main.yml
   roles:
-    - include_vars: vars.yml
     - { role: bootstrap-agent }
 
 - name: Create Environment and Kubernetes Module
   hosts: ocne-operator
+  vars_files: main.yml
   roles:
-    - include_vars: vars.yml
-    - { role: environment-kubernetes, install_user: oracle }
+    - { role: environment-kubernetes }

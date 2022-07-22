@@ -1,0 +1,7 @@
+---
+ocne_control_ip: 141.147.21.42
+ocne_operator_ip: 138.2.146.21
+ocne_worker_ip: 152.70.189.223
+
+install_user: oracle
+debug_output: true
