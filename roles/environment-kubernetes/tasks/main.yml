@@ -12,8 +12,8 @@
     state: link
   become_user: "{{ install_user }}"
   loop:
-    - ca.crt
-    - node.crt
+    - ca.cert
+    - node.cert
     - node.key
 
 - name: Create environment
