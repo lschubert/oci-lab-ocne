@@ -21,9 +21,7 @@
     - node.key
 
 - name: Create environment
-  shell: olcnectl environment create --config-file ./myenvironment.yaml
-  args:
-    chdir: "~"
+  shell: "olcnectl environment create --config-file /home/{{ install_user }}/myenvironment.yaml"
   register: env_create
   become_user: "{{ install_user }}"
 
