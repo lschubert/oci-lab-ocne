@@ -27,7 +27,7 @@
     - { role: control-setup }
 
 - name: Setup ocne-worker node
-  hosts: ocne-worker#
+  hosts: ocne-worker
   vars_files: main.yml
   roles:
     - { role: worker-setup }
