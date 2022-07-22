@@ -2,7 +2,7 @@
 - name: Create environment
   shell: |
     cd ~
-    olcnectl environment create --config-file myenvironment.yaml
+    olcnectl environment create --config-file ./myenvironment.yaml
   args:
     chdir: "~"
   register: env_create
@@ -16,7 +16,7 @@
 - name: Create Kubernetes module
   shell: |
     cd ~
-    olcnectl module create --config-file myenvironment.yaml
+    olcnectl module create --config-file ./myenvironment.yaml
   args:
     chdir: "~"
   register: mod_kube_create
