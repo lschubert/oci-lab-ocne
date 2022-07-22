@@ -1,6 +1,15 @@
 ---
 # Configure Firewall
-- name: Configure Firewall 
+- name: Configure Firewall Zone
+  firewalld:
+    zone: trusted
+    interface: cni0
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: true
+
+- name: Configure Firewall Ports
   firewalld:
     port: "{{ item.port }}/{{ item.proto }}"
     zone: trusted

@@ -1,45 +1,45 @@
 ---
-# - name: Configure executor
-#   hosts: localhost
-#   vars_files: main.yml
-#   roles:
-#     - { role: generate-resources }
+- name: Configure executor
+  hosts: localhost
+  vars_files: main.yml
+  roles:
+    - { role: generate-resources }
 
-# - name: Apply common configuration to all nodes
-#   hosts: all
-#   vars_files: main.yml
-#   roles:
-#     - { role: common-setup} 
+- name: Apply common configuration to all nodes
+  hosts: all
+  vars_files: main.yml
+  roles:
+    - { role: common-setup} 
 
-# - name: Setup ocne-operator node
-#   hosts: ocne-operator
-#   vars_files: main.yml
-#   roles:
-#     - { role: operator-setup }
+- name: Setup ocne-operator node
+  hosts: ocne-operator
+  vars_files: main.yml
+  roles:
+    - { role: operator-setup }
 
-# - name: Setup ocne-control node
-#   hosts: ocne-control
-#   vars_files: main.yml
-#   roles:
-#     - { role: control-setup }
+- name: Setup ocne-control node
+  hosts: ocne-control
+  vars_files: main.yml
+  roles:
+    - { role: control-setup }
 
-# - name: Setup ocne-worker node
-#   hosts: ocne-worker
-#   vars_files: main.yml
-#   roles:
-#     - { role: worker-setup }
+- name: Setup ocne-worker node
+  hosts: ocne-worker
+  vars_files: main.yml
+  roles:
+    - { role: worker-setup }
 
-# - name: Bootstrap Platform API Server
-#   hosts: ocne-operator
-#   vars_files: main.yml
-#   roles:
-#     - { role: bootstrap-api }
+- name: Bootstrap Platform API Server
+  hosts: ocne-operator
+  vars_files: main.yml
+  roles:
+    - { role: bootstrap-api }
 
-# - name: Bootstrap Platform Agents
-#   hosts: ocne-control, ocne-worker
-#   vars_files: main.yml
-#   roles:
-#     - { role: bootstrap-agent }
+- name: Bootstrap Platform Agents
+  hosts: ocne-control, ocne-worker
+  vars_files: main.yml
+  roles:
+    - { role: bootstrap-agent }
 
 - name: Create Environment and Kubernetes Module
   hosts: ocne-operator
