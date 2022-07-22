@@ -1,4 +1,19 @@
 ---
+# Configure Firewall
+- name: Configure Firewall 
+  firewalld:
+    port: "{{ item.port }}/{{ item.proto }}"
+    zone: trusted
+    interface: cni0
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: true
+  with_items:
+    - { port: 8090, proto: tcp }
+    - { port: 10250, proto: tcp } 
+    - { port: 10255, proto: tcp }
+    - { port: 8472, proto: udp }
 # Install Platfrom Agent
 - name: Install Platform Agent
   dnf:
