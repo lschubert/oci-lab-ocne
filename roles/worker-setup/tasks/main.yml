@@ -13,7 +13,6 @@
   firewalld:
     port: "{{ item.port }}/{{ item.proto }}"
     zone: trusted
-    interface: cni0
     permanent: yes
     immediate: yes
     state: enabled
