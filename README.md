@@ -46,25 +46,18 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
     5.3. create file ```~/.ssh/ocne_lab_id_rsa.pub```and copy contents from step 3.3 above.
 
-    5.3. execute ```export ANSIBLE_HOST_KEY_CHECKING=False```
+    5.4. Make sure "oci_executor" variable in ```vars/main.yml``` is set to false
 
-    5.4. Make sure "oci_executor" variable in setup.yml is set to false
+    5.5. in oci-lab-ocne folder execute ```./setup.sh``` 
 
-    5.5. in oci-lab-ocne folder execute ```ansible-playbook setup.yml``` to generate resource files
-
-    5.6. in oci-lab-ocne folder execute ```ansible-playbook -i ./hosts --private-key ~/.ssh/ocne_lab_id_rsa setup.yml``` to setup ocne in lab environment
 
 6. In case of "Lab Env". 
 
     6.1. In Visual Studio Code in Lab Env select Terminal > New Terminal
 
-    6.2. In Terminal execute ```export ANSIBLE_HOST_KEY_CHECKING=False```
+    6.2. Make sure "oci_executor" variable in ```vars/main.yml``` is set to true
 
-    6.3. Make sure "oci_executor" variable in setup.yml is set to true
-
-    6.4. in oci-lab-ocne folder execute ```ansible-playbook setup.yml``` to generate resource files
-
-    6.5. In oci-lab-ocne folder execute ```ansible-playbook -i ./hosts setup.yml``` to setup ocne in lab environment
+    6.3. in oci-lab-ocne folder execute ```./setup.sh```
 
 # Usage Notes
 
