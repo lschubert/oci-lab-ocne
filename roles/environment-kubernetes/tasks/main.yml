@@ -1,7 +1,7 @@
 ---
 - name: Create Certificates Directory
   file:
-    path: ~/.olcne/certificates
+    path: "/home/{{ install_user }}/.olcne/certificates"
     state: directory
   become_user: "{{ install_user }}"
 

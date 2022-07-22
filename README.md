@@ -26,7 +26,7 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
 3.  In local git repo ...
 
-    3.1. Modify ```generate-resources/vars/main.yml``` file to map IP adresses from step 1.2 to corresponding nodes.
+    3.1. Modify ```vars/main.yml``` file to map IP adresses from step 1.2 to corresponding nodes.
 
 4. In case of "Local executor": In Lab Environement ...
 
@@ -65,6 +65,18 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
     6.4. in oci-lab-ocne folder execute ```ansible-playbook setup.yml``` to generate resource files
 
     6.5. In oci-lab-ocne folder execute ```ansible-playbook -i ./hosts setup.yml``` to setup ocne in lab environment
+
+# Usage Notes
+
+The following three VMs are available in this Lab Environment
+
+* ocne-operator: Linux VM with CLI Tools to access (OCNE) Kubernetes Cluster 
+* ocne-control: (OCNE) Kubernetes Master Node running the API Server and Platform Agent
+* ocne-worker: (OCNE) Kubernetes Worker Node running Platform Agent
+
+From Visual Studio Code Terminal connect with
+```ssh oracle@ocne-operator``` to execute typical command line operations like 
+```kubectl get nodes``` 
 
 
 # Develop ToDo's
