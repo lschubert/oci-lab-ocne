@@ -1,6 +1,7 @@
 ---
 - name: Create environment
   shell: |
+    cd ~
     olcnectl environment create --config-file myenvironment.yaml
   args:
     chdir: "~"
