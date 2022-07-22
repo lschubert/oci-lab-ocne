@@ -5,7 +5,7 @@
   args:
     chdir: "~"
   register: env_create
-  become_user: olcne
+  become_user: "{{ install_user }}"
 
 - name: DEBUG output
   debug:
@@ -18,7 +18,7 @@
   args:
     chdir: "~"
   register: mod_kube_create
-  become_user: olcne
+  become_user: "{{ install_user }}"
 
 - name: DEBUG output
   debug:
@@ -31,7 +31,7 @@
   args:
     chdir: "~"
   register: mod_kube_validate
-  become_user: olcne
+  become_user: "{{ install_user }}"
 
 - name: DEBUG output
   debug:
@@ -48,7 +48,7 @@
     olcnectl module install --config-file myenvironment.yaml
   args:
     chdir: "~"
-  become_user: olcne
+  become_user: "{{ install_user }}"
 
 - name: Validate Deployment of Kubernetes module
   shell: |
@@ -56,7 +56,7 @@
   args:
     chdir: "~"
   register: deploy_mod_kube
-  become_user: olcne
+  become_user: "{{ install_user }}"
 
 - name: Output of Validation
   debug:
@@ -66,21 +66,21 @@
   file:
     path: ~/.kube
     state: directory
-  become_user: olcne
+  become_user: "{{ install_user }}"
 
 - name: "Setup kubectl - add config"
   copy:
     src: /etc/kubernetes/admin.conf
     dest: ~/.kube/config
-    owner: olcne
-    group: olcne
+    owner: "{{ install_user }}"
+    group: "{{ install_user }}"
   become: true
 
 - name: "Setup kubectl - export environment"
   lineinfile:
     path: ~/.bashrc
     line: 'export KUBECONFIG=$HOME/.kube/config'
-  become_user: olcne
+  become_user: "{{ install_user }}"
 
 - name: Validate kubectl
   shell: |
@@ -88,7 +88,7 @@
   args:
     chdir: "~"
   register: kubectl
-  become_user: olcne
+  become_user: "{{ install_user }}"
 
 - name: Output of Validation
   debug:
