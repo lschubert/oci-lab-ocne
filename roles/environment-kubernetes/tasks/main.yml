@@ -1,12 +1,11 @@
 ---
 - name: Create environment
   shell: |
-    cd ~
     olcnectl environment create --config-file ./myenvironment.yaml
   args:
     chdir: "~"
   register: env_create
-  become_user: "{{ install_user }}"
+  become_user: olcne
 
 - name: DEBUG output
   debug:
@@ -15,12 +14,11 @@
 
 - name: Create Kubernetes module
   shell: |
-    cd ~
     olcnectl module create --config-file ./myenvironment.yaml
   args:
     chdir: "~"
   register: mod_kube_create
-  become_user: "{{ install_user }}"
+  become_user: olcne
 
 - name: DEBUG output
   debug:
@@ -29,12 +27,11 @@
 
 - name: Validate Kubernetes module
   shell: |
-    cd ~
     olcnectl module validate --config-file myenvironment.yaml
   args:
     chdir: "~"
   register: mod_kube_validate
-  become_user: "{{ install_user }}"
+  become_user: olcne
 
 - name: DEBUG output
   debug:
@@ -48,20 +45,18 @@
 
 - name: Install Kubernetes module
   shell: |
-    cd ~
     olcnectl module install --config-file myenvironment.yaml
   args:
     chdir: "~"
-  become_user: "{{ install_user }}"
+  become_user: olcne
 
 - name: Validate Deployment of Kubernetes module
   shell: |
-    cd ~
     olcnectl module instances --config-file myenvironment.yaml
   args:
     chdir: "~"
   register: deploy_mod_kube
-  become_user: "{{ install_user }}"
+  become_user: olcne
 
 - name: Output of Validation
   debug:
@@ -71,21 +66,21 @@
   file:
     path: ~/.kube
     state: directory
-  become_user: "{{ install_user }}"
+  become_user: olcne
 
 - name: "Setup kubectl - add config"
   copy:
     src: /etc/kubernetes/admin.conf
     dest: ~/.kube/config
-    owner: "{{ install_user }}"
-    group: "{{ install_user }}"
+    owner: olcne
+    group: olcne
   become: true
 
 - name: "Setup kubectl - export environment"
   lineinfile:
     path: ~/.bashrc
     line: 'export KUBECONFIG=$HOME/.kube/config'
-  become_user: "{{ install_user }}"
+  become_user: olcne
 
 - name: Validate kubectl
   shell: |
@@ -93,7 +88,7 @@
   args:
     chdir: "~"
   register: kubectl
-  become_user: "{{ install_user }}"
+  become_user: olcne
 
 - name: Output of Validation
   debug:
