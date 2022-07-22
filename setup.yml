@@ -9,10 +9,7 @@
   hosts: all
   vars_files: main.yml
   roles:
-    # variables:
-    # ol_update: true: run "dnf update"
-    # oci_executor: true: execute ansible playbook from oci lab environment; false: execute from anywhere according to README.md instructions
-    - { role: common-setup, ol_update: false, oci_executor: true} 
+    - { role: common-setup} 
 
 - name: Setup ocne-operator node
   hosts: ocne-operator
@@ -27,7 +24,7 @@
     - { role: control-setup }
 
 - name: Setup ocne-worker node
-  hosts: ocne-worker#
+  hosts: ocne-worker
   vars_files: main.yml
   roles:
     - { role: worker-setup }
@@ -46,6 +43,7 @@
 
 - name: Create Environment and Kubernetes Module
   hosts: ocne-operator
+  remote_user: "{{ install_user }}"
   vars_files: main.yml
   roles:
     - { role: environment-kubernetes }

@@ -55,6 +55,12 @@
 - name: Transfer certificates
   shell: |
     bash -ex /etc/olcne/configs/certificates/olcne-tranfer-certs.sh
+  register: tranfer_cert
+
+- name: DEBUG output
+  debug:
+    var: tranfer_cert
+  when: debug_output == true
 
 # Create X.509 Certificates
 - name: Create X.509 Certificates for external IPs

@@ -1,17 +1,44 @@
 ---
+- name: Create Certificates Directory
+  file:
+    path: "/home/{{ install_user }}/.olcne/certificates"
+    state: directory
+    owner: "{{ install_user }}"
+    group: "{{ install_user }}"
+  become: true 
+
+- name: Configure Certificates
+  file:
+    path: "/home/{{ install_user }}/.olcne/certificates/{{ item }}"
+    src: "/etc/olcne/configs/certificates/production/{{ item }}"
+    owner: "{{ install_user }}"
+    group: "{{ install_user }}"
+    state: link
+  become: true 
+  loop:
+    - ca.cert
+    - node.cert
+    - node.key
+
 - name: Create environment
-  shell: |
-    olcnectl environment create --config-file myenvironment.yaml
+  shell: "olcnectl environment create --config-file myenvironment.yaml"
   args:
-    chdir: "~"
+    chdir: "/home/{{ install_user }}"
+  register: env_create
+  become: true
   become_user: "{{ install_user }}"
 
+- name: DEBUG output
+  debug:
+    var: env_create
+  when: debug_output == true
+
 - name: Create Kubernetes module
-  shell: |
-    olcnectl module create --config-file myenvironment.yaml
+  shell: olcnectl module create --config-file ./myenvironment.yaml
   args:
-    chdir: "~"
+    chdir: "/home/{{ install_user }}"
   register: mod_kube_create
+  become: true
   become_user: "{{ install_user }}"
 
 - name: DEBUG output
@@ -20,11 +47,11 @@
   when: debug_output == true
 
 - name: Validate Kubernetes module
-  shell: |
-    olcnectl module validate --config-file myenvironment.yaml
+  shell: olcnectl module validate --config-file myenvironment.yaml
   args:
-    chdir: "~"
+    chdir: "/home/{{ install_user }}"
   register: mod_kube_validate
+  become: true
   become_user: "{{ install_user }}"
 
 - name: DEBUG output
@@ -38,18 +65,18 @@
   when: "'Validation of module mycluster succeeded.' not in mod_kube_validate.stdout"
 
 - name: Install Kubernetes module
-  shell: |
-    olcnectl module install --config-file myenvironment.yaml
+  shell: olcnectl module install --config-file myenvironment.yaml
   args:
-    chdir: "~"
+    chdir: "/home/{{ install_user }}"
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Validate Deployment of Kubernetes module
-  shell: |
-    olcnectl module instances --config-file myenvironment.yaml
+  shell: olcnectl module instances --config-file myenvironment.yaml
   args:
-    chdir: "~"
+    chdir: "/home/{{ install_user }}"
   register: deploy_mod_kube
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Output of Validation
@@ -58,30 +85,33 @@
 
 - name: "Setup kubectl - make sure $HOME/.kube exists"
   file:
-    path: ~/.kube
+    path: "/home/{{ install_user }}/.kube"
     state: directory
+    owner: "{{ install_user }}"
+    group: "{{ install_user }}"
+  become: true
   become_user: "{{ install_user }}"
 
 - name: "Setup kubectl - add config"
   copy:
     src: /etc/kubernetes/admin.conf
-    dest: ~/.kube/config
+    dest: "/home/{{ install_user }}/.kube/config"
     owner: "{{ install_user }}"
     group: "{{ install_user }}"
   become: true
 
 - name: "Setup kubectl - export environment"
   lineinfile:
-    path: ~/.bashrc
+    path: "/home/{{ install_user }}/.bashrc"
     line: 'export KUBECONFIG=$HOME/.kube/config'
   become_user: "{{ install_user }}"
 
 - name: Validate kubectl
-  shell: |
-    kubectl get nodes
+  shell: kubectl get nodes
   args:
-    chdir: "~"
+    chdir: "/home/{{ install_user }}"
   register: kubectl
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Output of Validation

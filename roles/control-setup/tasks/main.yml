@@ -1,22 +1,32 @@
 ---
 # Configure Firewall
-- name: Configure Firewall 
+- name: Configure Firewall Zone
   firewalld:
-    port: "{{ item }}/tcp"
+    zone: trusted
+    interface: cni0
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: true
+  
+- name: Configure Firewall Ports
+  firewalld:
+    port: "{{ item.port }}/{{ item.proto }}"
+    zone: trusted
     permanent: yes
     immediate: yes
     state: enabled
   become: true
   with_items:
-    - 8090
-    - 10250
-    - 10255
-    - 8472
-    - 6443
-    - 10251
-    - 10252
-    - 2379
-    - 2380
+    - { port: 8090, proto: tcp }
+    - { port: 10250, proto: tcp } 
+    - { port: 10255, proto: tcp }
+    - { port: 8472, proto: udp }
+    - { port: 6443, proto: tcp }
+    - { port: 10251, proto: tcp }
+    - { port: 10252, proto: tcp }
+    - { port: 2379, proto: tcp }
+    - { port: 2380, proto: tcp }
 
 # Load the Bridge Filtering Module
 - name: Load the Bridge Filtering Module

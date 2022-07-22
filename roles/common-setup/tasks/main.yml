@@ -80,12 +80,14 @@
     user: "{{ ansible_user }}"
     state: present
 
+# group olcne is required for certificates transfer script validation
 - name: Create group olcne
   group:
     name: olcne
     state: present
   become: true
 
+# user olcne is required for certificates transfer script validation
 - name: Create user olcne
   user:
     name: olcne
