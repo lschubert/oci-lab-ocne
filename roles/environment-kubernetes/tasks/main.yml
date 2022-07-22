@@ -14,6 +14,7 @@
 
 - name: Create Kubernetes module
   shell: |
+    cd ~
     olcnectl module create --config-file myenvironment.yaml
   args:
     chdir: "~"
@@ -27,6 +28,7 @@
 
 - name: Validate Kubernetes module
   shell: |
+    cd ~
     olcnectl module validate --config-file myenvironment.yaml
   args:
     chdir: "~"
@@ -45,6 +47,7 @@
 
 - name: Install Kubernetes module
   shell: |
+    cd ~
     olcnectl module install --config-file myenvironment.yaml
   args:
     chdir: "~"
@@ -52,6 +55,7 @@
 
 - name: Validate Deployment of Kubernetes module
   shell: |
+    cd ~
     olcnectl module instances --config-file myenvironment.yaml
   args:
     chdir: "~"
