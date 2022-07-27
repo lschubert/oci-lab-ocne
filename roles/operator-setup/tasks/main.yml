@@ -23,7 +23,7 @@
 # Enable olcne-api-server
 - name: Enable olcne-api-server
   systemd: 
-    name: olcne-api-server
+    name: olcne-api-server.service
     enabled: yes
   become: true
 

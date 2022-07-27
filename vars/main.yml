@@ -1,7 +1,7 @@
 ---
-ocne_control_ip: 130.61.84.128
-ocne_operator_ip: 130.61.47.23
-ocne_worker_ip: 130.61.177.132
+ocne_control_ip: 141.144.226.95
+ocne_operator_ip: 130.162.243.8
+ocne_worker_ip: 141.147.59.248
 
 # install_user: os user for installing the ocne components
 install_user: oracle

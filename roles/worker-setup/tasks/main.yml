@@ -40,6 +40,6 @@
 # Enable olcne-agent
 - name: Enable olcne-agent
   systemd: 
-    name: olcne-agent
+    name: olcne-agent.service
     enabled: yes
   become: true
