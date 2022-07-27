@@ -48,16 +48,16 @@
   roles:
     - { role: environment-kubernetes }
 
-# - name: Configure Environment and Kubernetes Module
-#   hosts: ocne-control, ocne-worker
-#   remote_user: "{{ install_user }}"
-#   vars_files: main.yml
-#   roles:
-#     - { role: configure-kubernetes }
+- name: Configure Environment and Kubernetes Module
+  hosts: ocne-control, ocne-worker
+  remote_user: "{{ install_user }}"
+  vars_files: main.yml
+  roles:
+    - { role: configure-kubernetes }
 
-# - name: Configure Kubernetes Tools
-#   hosts: ocne-operator
-#   remote_user: "{{ install_user }}"
-#   vars_files: main.yml
-#   roles:
-#     - { role: configure-tools }
+- name: Configure Kubernetes Tools
+  hosts: ocne-operator
+  remote_user: "{{ install_user }}"
+  vars_files: main.yml
+  roles:
+    - { role: configure-tools }
