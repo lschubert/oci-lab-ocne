@@ -1,0 +1,30 @@
+---    
+- name: "Configure Kubernetes Runtime (ocne-worker)" 
+  systemd:
+    name: crio
+    state: started
+    enabled: yes
+  become: true
+  become_user: "{{ install_user }}"
+
+- name: Configure Kubernetes API (ocne-worker)
+  systemd:
+    name: kubelet
+    enabled: yes
+  become: true
+  become_user: "{{ install_user }}"
+
+- name: Configure Kubernetes API (ocne-control)
+  systemd:
+    name: kubelet
+    enabled: yes
+  become: true
+  become_user: "{{ install_user }}"
+
+- name: "Configure Kubernetes Runtime (ocne-control)" 
+  systemd:
+    name: crio
+    state: started
+    enabled: yes
+  become: true
+  become_user: "{{ install_user }}"
