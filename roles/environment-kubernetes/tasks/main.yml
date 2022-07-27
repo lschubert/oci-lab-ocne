@@ -81,7 +81,7 @@
     var: mod_kube_install
   when: debug_output == true
   
-  - name: Validate Deployment of Kubernetes module
+- name: Validate Deployment of Kubernetes module
   shell: olcnectl module instances --config-file myenvironment.yaml
   args:
     chdir: "/home/{{ install_user }}"
