@@ -56,7 +56,7 @@
     - { role: configure-kubernetes }
 
 - name: Configure Kubernetes Tools
-  hosts: ocne-operator
+  hosts: ocne-control
   remote_user: "{{ install_user }}"
   vars_files: main.yml
   roles:
