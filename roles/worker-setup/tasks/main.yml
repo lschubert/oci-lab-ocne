@@ -32,10 +32,13 @@
 # Install Platfrom Agent
 - name: Install Platform Agent
   dnf:
-    name: "olcne-agent,olcne-utils"
+    name: "{{ item }}"
     enablerepo: "ol8_olcne15,ol8_addons,ol8_baseos_latest,ol8_appstream,ol8_UEKR6"
     disablerepo: "ol8_olcne12,ol8_olcne13,ol8_olcne14,ol8_developer"
   become: true
+  loop:
+    - olcne-agent
+    - olcne-utils
 
 # Enable olcne-agent
 - name: Enable olcne-agent
