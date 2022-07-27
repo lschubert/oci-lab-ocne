@@ -22,6 +22,14 @@
     - { port: 10250, proto: tcp } 
     - { port: 10255, proto: tcp }
     - { port: 8472, proto: udp }
+
+# Load the Bridge Filtering Module
+- name: Load the Bridge Filtering Module
+  shell: |
+    modprobe br_netfilter
+    sh -c 'echo "br_netfilter" > /etc/modules-load.d/br_netfilter.conf'
+  become: true
+  
 # Install Platfrom Agent
 - name: Install Platform Agent
   dnf:
