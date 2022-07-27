@@ -64,20 +64,20 @@
     msg: Validation of Kubernetes module failed. {{ mod_kube }}
   when: "'Validation of module mycluster succeeded.' not in mod_kube_validate.stdout"
 
-- name: Install Kubernetes module
-  shell: olcnectl module install --config-file myenvironment.yaml
-  args:
-    chdir: "/home/{{ install_user }}"
-  register: mod_kube_install
-  ignore_errors: true
-  become: true
-  become_user: "{{ install_user }}"
-  delay: 20
-  retries: 5
-  until: "'Please execute the following operations' in mod_kube_install.stdout"
+# - name: Install Kubernetes module
+#   shell: olcnectl module install --config-file myenvironment.yaml
+#   args:
+#     chdir: "/home/{{ install_user }}"
+#   register: mod_kube_install
+#   ignore_errors: true
+#   become: true
+#   become_user: "{{ install_user }}"
+#   delay: 20
+#   retries: 5
+#   until: "'Please execute the following operations' in mod_kube_install.stdout"
 
-- name: DEBUG output
-  debug:
-    var: mod_kube_install
-  when: debug_output == true
+# - name: DEBUG output
+#   debug:
+#     var: mod_kube_install
+#   when: debug_output == true
   
