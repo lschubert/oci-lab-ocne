@@ -16,14 +16,17 @@
   copy:
     src: /etc/kubernetes/admin.conf
     dest: "/home/{{ install_user }}/.kube/config"
+    remote_src: true
     owner: "{{ install_user }}"
     group: "{{ install_user }}"
   become: true
-
+    
 - name: "Setup kubectl - export environment"
   lineinfile:
     path: "/home/{{ install_user }}/.bashrc"
     line: 'export KUBECONFIG=$HOME/.kube/config'
+    create: yes
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Validate kubectl
