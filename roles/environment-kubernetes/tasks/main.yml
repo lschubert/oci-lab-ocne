@@ -74,7 +74,7 @@
   become_user: "{{ install_user }}"
   delay: 20
   retries: 5
-  until: "'Please execute the following operations' in mod_kube_install.stdout"
+  until: mod_kube_install.rc == 0
 
 - name: DEBUG output
   debug:
