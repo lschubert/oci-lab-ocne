@@ -69,9 +69,13 @@ The following three VMs are available in this Lab Environment
 
 From Visual Studio Code Terminal connect with
 ```ssh oracle@ocne-operator``` to execute typical command line operations like 
+
+```olcnectl environment report --config-file myenvironment.yaml```
+
+```olcnectl module instances --config-file myenvironment.yaml```
+
+or 
+```ssh oracle@ocne-control``` to execute typical command line operations like
+
 ```kubectl get nodes``` 
 
-
-# Develop ToDo's
-
-Validate Kubernetes module fails
