@@ -11,15 +11,19 @@
 # Install OCNE with proper repos 
 - name: Install Platform CLI, Platform API Server and utilities
   dnf:
-    name: "olcnectl,olcne-api-server,olcne-utils"
+    name: "{{ item }}"
     enablerepo: "ol8_olcne15,ol8_addons,ol8_baseos_latest,ol8_appstream,ol8_UEKR6"
     disablerepo: "ol8_olcne12,ol8_olcne13,ol8_olcne14,ol8_developer"
   become: true
+  loop:
+    - olcnectl
+    - olcne-api-server
+    - olcne-utils
 
 # Enable olcne-api-server
 - name: Enable olcne-api-server
   systemd: 
-    name: olcne-api-server
+    name: olcne-api-server.service
     enabled: yes
   become: true
 

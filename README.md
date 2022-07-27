@@ -16,13 +16,13 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
 2. Checkout this git repo 
 
-    2.1 either within Lab Environment (Case: Lab Env), or
+    2.1 either within Lab Environment (Case: Lab Env)
 
     2.1.1 Open Visual Studio Code. Select Topmost left Icon ("Explorer") and press "Clone Repository" button.
     Provide github URL: https://github.com/lschubert/oci-lab-ocne.git
     Select "Open Folder" and choose the local path of cloned repo
 
-    2.2 on a local executor machine (Case: Local executor)
+    2.2 or, on a local executor machine (Case: Local executor)
 
 3.  In local git repo ...
 

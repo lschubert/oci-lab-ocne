@@ -66,7 +66,15 @@
     name: oracle-olcne-release-el8
     state: latest
   become: true
-  
+
+# Make sure currect repos are permanently configured 
+# Note: dnf task does this only for the current task
+- name: Configure proper yum repos
+  shell: |
+    dnf config-manager --enable ol8_olcne15 ol8_addons ol8_baseos_latest ol8_appstream ol8_UEKR6
+    dnf config-manager --disable ol8_olcne12 ol8_olcne13 ol8_olcne14 ol8_developer
+  become: true
+
 # Disable Swap
 - name: Disable Swap
   shell: |

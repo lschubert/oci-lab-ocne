@@ -13,3 +13,4 @@
 - name: DEBUG
   debug:
     var: bootstrap
+  when: debug_output == true

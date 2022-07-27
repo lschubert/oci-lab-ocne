@@ -68,9 +68,19 @@
   shell: olcnectl module install --config-file myenvironment.yaml
   args:
     chdir: "/home/{{ install_user }}"
+  register: mod_kube_install
+  ignore_errors: true
   become: true
   become_user: "{{ install_user }}"
+  delay: 20
+  retries: 5
+  until: mod_kube_install.rc == 0
 
+- name: DEBUG output
+  debug:
+    var: mod_kube_install
+  when: debug_output == true
+  
 - name: Validate Deployment of Kubernetes module
   shell: olcnectl module instances --config-file myenvironment.yaml
   args:
@@ -79,41 +89,7 @@
   become: true
   become_user: "{{ install_user }}"
 
-- name: Output of Validation
+- name: DEBUG output
   debug:
     var: deploy_mod_kube
-
-- name: "Setup kubectl - make sure $HOME/.kube exists"
-  file:
-    path: "/home/{{ install_user }}/.kube"
-    state: directory
-    owner: "{{ install_user }}"
-    group: "{{ install_user }}"
-  become: true
-  become_user: "{{ install_user }}"
-
-- name: "Setup kubectl - add config"
-  copy:
-    src: /etc/kubernetes/admin.conf
-    dest: "/home/{{ install_user }}/.kube/config"
-    owner: "{{ install_user }}"
-    group: "{{ install_user }}"
-  become: true
-
-- name: "Setup kubectl - export environment"
-  lineinfile:
-    path: "/home/{{ install_user }}/.bashrc"
-    line: 'export KUBECONFIG=$HOME/.kube/config'
-  become_user: "{{ install_user }}"
-
-- name: Validate kubectl
-  shell: kubectl get nodes
-  args:
-    chdir: "/home/{{ install_user }}"
-  register: kubectl
-  become: true
-  become_user: "{{ install_user }}"
-
-- name: Output of Validation
-  debug:
-    var: kubectl
+  when: debug_output == true
