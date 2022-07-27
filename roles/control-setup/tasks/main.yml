@@ -12,7 +12,6 @@
 - name: Configure Firewall Ports
   firewalld:
     port: "{{ item.port }}/{{ item.proto }}"
-    zone: trusted
     permanent: yes
     immediate: yes
     state: enabled
