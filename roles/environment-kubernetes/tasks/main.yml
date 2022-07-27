@@ -72,44 +72,52 @@
   ignore_errors: true
   become: true
   become_user: "{{ install_user }}"
+  delay: 20
+  retries: 5
+  until: "'Please execute the following operations' in mod_kube_install.stdout"
 
 - name: DEBUG output
   debug:
     var: mod_kube_install
   when: debug_output == true
-
-- name: Configure ocne-worker
-  shell: |
-    systemctl enable crio.service && systemctl start crio.service
-    systemctl enable kubelet.service
+    
+- name: "Configure Kubernetes Runtime (ocne-worker)" 
+  systemd:
+    name: crio
+    state: started
+    enabled: yes
   delegate_to: ocne-worker
   when: "'Please execute the following operations' in mod_kube_install.stdout"
+  become: true
+  become_user: "{{ install_user }}"
 
-- name: "Configure Kubernetes Runtime" 
+- name: Configure Kubernetes API (ocne-worker)
   systemd:
-    name: "{{ item.module }}"
-    state: "{{ item.state }}"
+    name: kubelet
     enabled: yes
-  delegate_to: "{{ item.delegate_to }}"
+  delegate_to: ocne-worker
   when: "'Please execute the following operations' in mod_kube_install.stdout"
   become: true
   become_user: "{{ install_user }}"
-  loop:
-    - { module: crio, state: started, delegate_to: ocne-worker}
-    - { module: crio, state: started, delegate_to: ocne-control}
 
-- name: Configure Kubernetes API
+- name: Configure Kubernetes API (ocne-control)
   systemd:
-    name: "{{ item.module }}"
+    name: kubelet
     enabled: yes
-  delegate_to: "{{ item.delegate_to }}"
+  delegate_to: ocne-control
   when: "'Please execute the following operations' in mod_kube_install.stdout"
   become: true
   become_user: "{{ install_user }}"
-  loop:
-    - { module: crio, delegate_to: ocne-worker}
-    - { module: crio, delegate_to: ocne-control}
-  
+
+- name: "Configure Kubernetes Runtime (ocne-control)" 
+  systemd:
+    name: crio
+    state: started
+    enabled: yes
+  delegate_to: ocne-control
+  when: "'Please execute the following operations' in mod_kube_install.stdout"
+  become: true
+  become_user: "{{ install_user }}"
 
 - name: Validate Deployment of Kubernetes module
   shell: olcnectl module instances --config-file myenvironment.yaml
