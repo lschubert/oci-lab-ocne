@@ -85,12 +85,31 @@
   delegate_to: ocne-worker
   when: "'Please execute the following operations' in mod_kube_install.stdout"
 
-- name: Configure ocne-control
-  shell: |
-    systemctl enable kubelet.service
-    systemctl enable crio.service && systemctl start crio.service
-  delegate_to: ocne-control
+- name: "Configure Kubernetes Runtime" 
+  systemd:
+    name: "{{ item.module }}"
+    state: "{{ item.state }}"
+    enabled: yes
+  delegate_to: "{{ item.delegate_to }}"
   when: "'Please execute the following operations' in mod_kube_install.stdout"
+  become: true
+  become_user: "{{ install_user }}"
+  loop:
+    - { module: crio, state: started, delegate_to: ocne-worker}
+    - { module: crio, state: started, delegate_to: ocne-control}
+
+- name: Configure Kubernetes API
+  systemd:
+    name: "{{ item.module }}"
+    enabled: yes
+  delegate_to: "{{ item.delegate_to }}"
+  when: "'Please execute the following operations' in mod_kube_install.stdout"
+  become: true
+  become_user: "{{ install_user }}"
+  loop:
+    - { module: crio, delegate_to: ocne-worker}
+    - { module: crio, delegate_to: ocne-control}
+  
 
 - name: Validate Deployment of Kubernetes module
   shell: olcnectl module instances --config-file myenvironment.yaml
