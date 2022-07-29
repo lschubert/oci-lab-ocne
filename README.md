@@ -63,8 +63,8 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
 The following three VMs are available in this Lab Environment
 
-* ocne-operator: Linux VM with CLI Tools to access (OCNE) Kubernetes Cluster 
-* ocne-control: (OCNE) Kubernetes Master Node running the API Server and Platform Agent
+* ocne-operator: Linux VM with CLI Tools to access (OCNE) Kubernetes Cluster and the Platform API Server 
+* ocne-control: (OCNE) Kubernetes Master Node running the Platform Agent
 * ocne-worker: (OCNE) Kubernetes Worker Node running Platform Agent
 
 From Visual Studio Code Terminal connect with
