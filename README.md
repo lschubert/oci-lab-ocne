@@ -3,7 +3,7 @@ Automation to set up OCNE in Oracle provided free lab environment (https://luna.
 
 At the time this code was created the lab timeslot is limited to 1 hour, which lead me to automate these tasks.
 
-# Pre-Requisites on the execution machine:
+# Pre-Requisites on the local execution machine:
 - git client, ansible installed
     - verify with ```git version```and ```ansible --version```
 
@@ -16,7 +16,7 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
 2. Checkout this git repo 
 
-    2.1 either within Lab Environment (Case: Lab Env)
+    2.1 either within Lab Environment (Case: Lab Env) - this is RECOMMENDED
 
     2.1.1 Open Visual Studio Code. Select Topmost left Icon ("Explorer") and press "Clone Repository" button.
     Provide github URL: https://github.com/lschubert/oci-lab-ocne.git
