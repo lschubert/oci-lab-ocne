@@ -28,7 +28,7 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
     3.1. Modify ```vars/main.yml``` file to map IP adresses from step 1.2 to corresponding nodes.
 
-4. In case of "Local executor": In Lab Environement ...
+4. In case of "Lab env": In Lab Environement ...
 
     4.1. Open Visual Studio Code, Select "Terminal > New Terminal"
     
