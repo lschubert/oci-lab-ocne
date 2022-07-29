@@ -28,7 +28,7 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
     3.1. Modify ```vars/main.yml``` file to map IP adresses from step 1.2 to corresponding nodes.
 
-4. In case of "Lab env": In Lab Environement ...
+4. In case of "Local executor": In Lab Environement ...
 
     4.1. Open Visual Studio Code, Select "Terminal > New Terminal"
     
@@ -53,11 +53,13 @@ At the time this code was created the lab timeslot is limited to 1 hour, which l
 
 6. In case of "Lab Env". 
 
-    6.1. In Visual Studio Code in Lab Env select Terminal > New Terminal
+    6.1. Open file ```vars/main.yml``` in Visual Studio Code and modify the values for ```ocne_control_ip```, ```ocne_operator_ip``` and ```ocne_worker_ip``` to match the corresponsing IPs from step 1
 
-    6.2. Make sure "oci_executor" variable in ```vars/main.yml``` is set to true
+    6.2. Make sure "oci_executor" variable in ```vars/main.yml``` is set to true 
 
-    6.3. in oci-lab-ocne folder execute ```./setup.sh```
+    6.3. In Visual Studio Code in Lab Env select Terminal > New Terminal
+
+    6.4. in oci-lab-ocne folder execute ```./setup.sh```
 
 # Usage Notes
 
